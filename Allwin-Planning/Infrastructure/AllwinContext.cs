@@ -13,6 +13,7 @@ namespace Allwin_Planning.Infrastructure
         public DbSet<Depot> Depots { get; set; }
         public DbSet<Pickup> Pickups { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<StopLog> StopLog { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.ApplyAllConfigurations(typeof(AllwinContext));
     }
 }
