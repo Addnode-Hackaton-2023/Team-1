@@ -7,5 +7,6 @@
         public string StopId { get; set; }
         public string? StopType { get; set; }
         public string? Status { get; set; }
+        public int? Weight { get; set; }
     }
 }
