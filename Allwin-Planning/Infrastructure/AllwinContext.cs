@@ -9,6 +9,7 @@ namespace Allwin_Planning.Infrastructure
 
         public DbSet<Area> Areas { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<DeliveryDay> DeliveryDay { get; set; }
         public DbSet<Depot> Depots { get; set; }
         public DbSet<Pickup> Pickups { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
