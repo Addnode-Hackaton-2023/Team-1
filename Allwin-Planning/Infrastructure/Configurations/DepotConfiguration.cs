@@ -10,6 +10,7 @@ namespace Allwin_Planning.Infrastructure.Configurations
         {
             builder.ToTable("Depot");
             builder.HasKey(e => e.Gid);
+            builder.Property(e => e.Shape).HasColumnType("geometry");
         }
     }
 }
