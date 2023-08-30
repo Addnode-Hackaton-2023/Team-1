@@ -55,3 +55,4 @@ Den totala tiden av presentation får ni distribuera som ni vill men den måste 
   - Demo
   - Hur löser ni denna utmaning?
   - Vad är nästa steg, rekommendationer för framtiden?
+
