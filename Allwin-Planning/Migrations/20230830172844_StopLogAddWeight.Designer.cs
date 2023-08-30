@@ -4,6 +4,7 @@ using Allwin_Planning.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
@@ -12,9 +13,11 @@ using NetTopologySuite.Geometries;
 namespace Allwin_Planning.Migrations
 {
     [DbContext(typeof(AllwinContext))]
-    partial class AllwinContextModelSnapshot : ModelSnapshot
+    [Migration("20230830172844_StopLogAddWeight")]
+    partial class StopLogAddWeight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
