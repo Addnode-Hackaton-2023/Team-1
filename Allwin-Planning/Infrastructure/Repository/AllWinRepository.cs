@@ -42,5 +42,56 @@ namespace Allwin_Planning.Infrastructure.Repository
 		{
 			return await m_Context.Areas.ToListAsync();
 		}
+
+		public async Task<Depot> GetDepot(Guid gid)
+		{
+			return await m_Context.Depots.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
+		}
+
+		public async Task<Pickup> GetPickup(Guid gid)
+		{
+			return await m_Context.Pickups.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
+		}
+
+		public async Task<Delivery> GetDelivery(Guid gid)
+		{
+			return await m_Context.Deliveries.Include(d => d.DeliveryDays).FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
+		}
+
+		public Task<Depot> AddDepot(Depot depot)
+		{
+			var result = m_Context.Add(depot);
+			return Task.FromResult(result.Entity);
+		}
+
+		public Task<Pickup> AddPickup(Pickup pickup)
+		{
+			var result = m_Context.Add(pickup);
+			return Task.FromResult(result.Entity);
+		}
+
+		public Task<Delivery> AddDelivery(Delivery delivery)
+		{
+			var result = m_Context.Add(delivery);
+			return Task.FromResult(result.Entity);
+		}
+
+		public async Task DeleteDepot(Guid gid)
+		{
+			var depot = await m_Context.Depots.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
+			m_Context.Depots.Remove(depot);
+		}
+
+		public async Task DeletePickup(Guid gid)
+		{
+			var pickup = await m_Context.Pickups.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
+			m_Context.Pickups.Remove(pickup);
+		}
+
+		public async Task DeleteDelivery(Guid gid)
+		{
+			var delivery = await m_Context.Deliveries.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
+			m_Context.Deliveries.Remove(delivery);
+		}
 	}
 }
