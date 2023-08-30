@@ -1,4 +1,5 @@
 ﻿using Allwin_Planning.Core.Entities;
+using Allwin_Planning.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,13 +9,25 @@ namespace Allwin_Planning.Controllers
     [ApiController]
     public class DriverController : ControllerBase
     {
-        public Stops GetStops(Guid vehicleId, int dayOfWeek)
+        private readonly IAllwinRepository _repository;
+
+        public DriverController(IAllwinRepository repository)
         {
+            _repository = repository;
+        }
+
+        [HttpGet(Name = "Stops")]
+        public async Task<Stops> GetStops([FromQuery] Guid areaId, [FromQuery] Guid vehicleId, [FromQuery] int weekday)
+        {
+            var depot = await _repository.GetDepot(areaId);
+            var pickups = await _repository.GetPickups(vehicleId);
+            var deliveries = await _repository.GetDeliveries(vehicleId, weekday);
+
             return new Stops()
             {
-                Depot = new Depot(),
-                Pickups = new List<Pickup>(),
-                Delivery = new Delivery()
+                Depot = depot,
+                Pickups = pickups,
+                Deliveries = deliveries
             };
         }
     }

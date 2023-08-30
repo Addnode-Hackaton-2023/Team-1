@@ -7,7 +7,7 @@ namespace Allwin_Planning.Core.Interfaces
 		Task<List<Pickup>> GetPickups(Guid vehicleId);
 		Task<List<Delivery>> GetDeliveries(Guid vehicleId, int weekday);
 		Task<List<Depot>> GetDepots();
-		Task<List<Vehicle>> GetVehicles();
+        Task<List<Vehicle>> GetVehicles();
 		Task<List<Area>> GetAreas();
 		Task<Depot> GetDepot(Guid gid);
 		Task<Pickup> GetPickup(Guid gid);

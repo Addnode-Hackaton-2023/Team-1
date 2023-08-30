@@ -33,7 +33,7 @@ namespace Allwin_Planning.Infrastructure.Repository
 			return await m_Context.Depots.ToListAsync();
 		}
 
-		public async Task<List<Vehicle>> GetVehicles()
+        public async Task<List<Vehicle>> GetVehicles()
 		{
 			return await m_Context.Vehicles.ToListAsync();
 		}
@@ -43,9 +43,9 @@ namespace Allwin_Planning.Infrastructure.Repository
 			return await m_Context.Areas.ToListAsync();
 		}
 
-		public async Task<Depot> GetDepot(Guid gid)
+		public async Task<Depot> GetDepot(Guid areaId)
 		{
-			return await m_Context.Depots.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
+			return await m_Context.Depots.FirstOrDefaultAsync(d => d.AreaId == areaId) ?? throw new Exception("Not found");
 		}
 
 		public async Task<Pickup> GetPickup(Guid gid)

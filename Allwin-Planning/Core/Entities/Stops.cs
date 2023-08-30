@@ -6,7 +6,7 @@
 
         public IEnumerable<Pickup> Pickups { get; init; }
 
-        public Delivery Delivery { get; init; }
+        public IEnumerable<Delivery> Deliveries { get; init; }
 
     }
 }
