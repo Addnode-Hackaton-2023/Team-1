@@ -2,7 +2,7 @@
 
 namespace Allwin_Planning.Core.Entities
 {
-    public class Pickups
+    public class Pickup
     {
         public Guid Gid { get; set; }
         public string PickupName { get; set; }

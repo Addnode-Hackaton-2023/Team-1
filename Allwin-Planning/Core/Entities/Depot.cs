@@ -2,7 +2,7 @@
 
 namespace Allwin_Planning.Core.Entities
 {
-    public class Depots
+    public class Depot
     {
         public Guid Gid { get; set; }
         public string DepotName { get; set; }
