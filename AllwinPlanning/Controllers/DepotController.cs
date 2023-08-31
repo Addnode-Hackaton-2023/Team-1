@@ -52,8 +52,9 @@ namespace AllwinPlanning.Controllers
 			depot.AreaId = depotDto.AreaId;
 			depot.DepotName = depotDto.DepotName;
 			depot.Shape = GeometryHelper.CreatePoint(depotDto.Shape);
+			_repository.Save();
 
-			return DepotModel.Create(await _repository.AddDepot(depot));
+			return DepotModel.Create(depot);
 		}
 
 		[HttpDelete("{gid}")]

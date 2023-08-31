@@ -18,9 +18,10 @@ namespace AllwinPlanning.Core.Interfaces
 		Task<Pickup> AddPickup(Pickup pickup);
 		Task<Delivery> AddDelivery(Delivery delivery);
 		Task<StopLog> AddStopLog(StopLog stopLog);
-        Task<List<StopLog>> GetStopLog();
-        Task DeleteDepot(Guid gid);
+		Task<List<StopLog>> GetStopLog();
+		Task DeleteDepot(Guid gid);
 		Task DeletePickup(Guid gid);
 		Task DeleteDelivery(Guid gid);
+		void Save();
 	}
 }
