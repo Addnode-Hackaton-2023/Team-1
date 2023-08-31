@@ -1,4 +1,5 @@
-﻿using AllwinPlanning.Core.Interfaces;
+﻿using AllwinPlanning.Core.Entities;
+using AllwinPlanning.Core.Interfaces;
 using AllwinPlanning.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,5 +22,11 @@ namespace AllwinPlanning.Controllers
 		{
 			return (await _repository.GetVehicles()).Select(VehicleModel.Create).ToList();
 		}
-	}
+
+        [HttpGet(Name = "GetAreas")]
+        public async Task<List<Area>> GetAreas()
+        {
+            return await _repository.GetAreas();
+        }
+    }
 }
