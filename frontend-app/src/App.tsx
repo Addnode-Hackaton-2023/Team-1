@@ -11,12 +11,20 @@ import './App.css';
 import { deliveryRenderer, depotRenderer, pickupRenderer } from './Renderers';
 import { AllwinHeader } from './allwin-header';
 import { useGetAllVehicles } from './utils/vehicles';
+import { useGetAllDepots } from './utils/depots';
+import { useGetAllDeliveries } from './utils/deliveries';
+import { useGetAllPickups } from './utils/pickups';
 
 function App() {
   const vehicleQuery = useGetAllVehicles();
+  const depotQuery = useGetAllDepots();
+  const deliveryQuery = useGetAllDeliveries();
+  const pickupQuery = useGetAllPickups();
+
+  const ready = Boolean(vehicleQuery.data && depotQuery.data && deliveryQuery.data && pickupQuery.data);
 
   useEffect(() => {
-    if (vehicleQuery.isSuccess && vehicleQuery.data) {
+    if (ready) {
       const map = new Map({
         basemap: 'dark-gray-vector'
       });
@@ -317,7 +325,7 @@ function App() {
         map.removeAll(), View.ui.remove(editor), View.destroy();
       };
     }
-  }, [vehicleQuery.data, vehicleQuery.isSuccess]);
+  }, [ready, vehicleQuery.data, pickupQuery.data, deliveryQuery.data, depotQuery.data]);
 
   return (
     <>
