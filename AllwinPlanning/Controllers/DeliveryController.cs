@@ -51,17 +51,18 @@ namespace AllwinPlanning.Controllers
 		[HttpPut]
 		public async Task<DeliveryModel> PutAsync([FromBody] DeliveryDto DeliveryDto)
 		{
-			var Delivery = await _repository.GetDelivery(DeliveryDto.Gid);
+			var delivery = await _repository.GetDelivery(DeliveryDto.Gid);
 
-			Delivery.DeliveryName = DeliveryDto.DeliveryName;
-			Delivery.ContactName = DeliveryDto.ContactName;
-			Delivery.ContactPhone = DeliveryDto.ContactPhone;
-			Delivery.VehicleId = DeliveryDto.VehicleId;
-			Delivery.StopTime = DeliveryDto.StopTime;
-			Delivery.DeliveryDays = DeliveryDto.DeliveryDays;
-			Delivery.Shape = GeometryHelper.CreatePoint(DeliveryDto.Shape);
+			delivery.DeliveryName = DeliveryDto.DeliveryName;
+			delivery.ContactName = DeliveryDto.ContactName;
+			delivery.ContactPhone = DeliveryDto.ContactPhone;
+			delivery.VehicleId = DeliveryDto.VehicleId;
+			delivery.StopTime = DeliveryDto.StopTime;
+			delivery.DeliveryDays = DeliveryDto.DeliveryDays;
+			delivery.Shape = GeometryHelper.CreatePoint(DeliveryDto.Shape);
 
-			return DeliveryModel.Create(await _repository.AddDelivery(Delivery));
+			_repository.Save();
+			return DeliveryModel.Create(delivery);
 		}
 
 		[HttpDelete("{gid}")]
