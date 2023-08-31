@@ -19,10 +19,16 @@ namespace AllwinPlanning.Controllers
 			_repository = repository;
 		}
 
-		[HttpGet("{gid}")]
-		public async Task<Depot> GetDepot(Guid gid)
+		[HttpGet]
+		public async Task<List<DepotModel>> GetAll()
 		{
-			return await _repository.GetDepot(gid);
+			return (await _repository.GetDepots()).Select(DepotModel.Create).ToList();
+		}
+
+		[HttpGet("{gid}")]
+		public async Task<DepotModel> GetDepot(Guid gid)
+		{
+			return DepotModel.Create(await _repository.GetDepot(gid));
 		}
 
 		[HttpPost]
