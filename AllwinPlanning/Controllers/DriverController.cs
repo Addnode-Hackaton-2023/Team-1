@@ -1,4 +1,5 @@
-﻿using AllwinPlanning.Core.Interfaces;
+﻿using AllwinPlanning.Core.Entities;
+using AllwinPlanning.Core.Interfaces;
 using AllwinPlanning.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,5 +30,20 @@ namespace AllwinPlanning.Controllers
 				Deliveries = deliveries.Select(DeliveryModel.Create)
 			};
 		}
-	}
+
+        [HttpPost(Name = "AddStopLog")]
+		public async Task<ActionResult> AddStopLogAsync(StopLog stopLog)
+		{
+			try
+			{
+				await _repository.AddStopLog(stopLog);
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			
+			return Ok();
+		}
+    }
 }
