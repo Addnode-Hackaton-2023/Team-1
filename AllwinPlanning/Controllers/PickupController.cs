@@ -35,6 +35,7 @@ namespace AllwinPlanning.Controllers
 		[HttpPost]
 		public async Task<PickupModel> PostAsync([FromBody] PickupDto pickupDto)
 		{
+			var vehicle = (await _repository.GetVehicles()).Find(v => v.Gid == pickupDto.VehicleId);
 			var pickup = new Pickup
 			{
 				Active = pickupDto.Active,
@@ -50,8 +51,10 @@ namespace AllwinPlanning.Controllers
 				VehicleId = pickupDto.VehicleId,
 				Shape = GeometryHelper.CreatePoint(pickupDto.Shape)
 			};
+			vehicle?.Pickups.Add(pickup);
+			_repository.Save();
 
-			return PickupModel.Create(await _repository.AddPickup(pickup));
+			return PickupModel.Create(pickup);
 		}
 
 		[HttpPut]
