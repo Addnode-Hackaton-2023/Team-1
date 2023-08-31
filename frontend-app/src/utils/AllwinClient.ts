@@ -61,6 +61,412 @@ export class AdminClient {
     }
 }
 
+export class DeliveryClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:44356";
+    }
+
+    getAll(signal?: AbortSignal | undefined): Promise<DeliveryModel[]> {
+        let url_ = this.baseUrl + "/api/Delivery/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAll(_response);
+        });
+    }
+
+    protected processGetAll(response: Response): Promise<DeliveryModel[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DeliveryModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DeliveryModel[]>(null as any);
+    }
+
+    getDelivery(gid: string, signal?: AbortSignal | undefined): Promise<DeliveryModel> {
+        let url_ = this.baseUrl + "/api/Delivery/GetDelivery/{gid}";
+        if (gid === undefined || gid === null)
+            throw new Error("The parameter 'gid' must be defined.");
+        url_ = url_.replace("{gid}", encodeURIComponent("" + gid));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetDelivery(_response);
+        });
+    }
+
+    protected processGetDelivery(response: Response): Promise<DeliveryModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DeliveryModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DeliveryModel>(null as any);
+    }
+
+    post(deliveryDto: DeliveryDto, signal?: AbortSignal | undefined): Promise<DeliveryModel> {
+        let url_ = this.baseUrl + "/api/Delivery/Post";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(deliveryDto);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPost(_response);
+        });
+    }
+
+    protected processPost(response: Response): Promise<DeliveryModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DeliveryModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DeliveryModel>(null as any);
+    }
+
+    put(deliveryDto: DeliveryDto, signal?: AbortSignal | undefined): Promise<DeliveryModel> {
+        let url_ = this.baseUrl + "/api/Delivery/Put";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(deliveryDto);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPut(_response);
+        });
+    }
+
+    protected processPut(response: Response): Promise<DeliveryModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DeliveryModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DeliveryModel>(null as any);
+    }
+
+    delete(gid: string, signal?: AbortSignal | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Delivery/Delete/{gid}";
+        if (gid === undefined || gid === null)
+            throw new Error("The parameter 'gid' must be defined.");
+        url_ = url_.replace("{gid}", encodeURIComponent("" + gid));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDelete(_response);
+        });
+    }
+
+    protected processDelete(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+}
+
+export class DepotClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:44356";
+    }
+
+    getAll(signal?: AbortSignal | undefined): Promise<DepotModel[]> {
+        let url_ = this.baseUrl + "/api/Depot/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAll(_response);
+        });
+    }
+
+    protected processGetAll(response: Response): Promise<DepotModel[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DepotModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DepotModel[]>(null as any);
+    }
+
+    getDepot(gid: string, signal?: AbortSignal | undefined): Promise<DepotModel> {
+        let url_ = this.baseUrl + "/api/Depot/GetDepot/{gid}";
+        if (gid === undefined || gid === null)
+            throw new Error("The parameter 'gid' must be defined.");
+        url_ = url_.replace("{gid}", encodeURIComponent("" + gid));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetDepot(_response);
+        });
+    }
+
+    protected processGetDepot(response: Response): Promise<DepotModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DepotModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DepotModel>(null as any);
+    }
+
+    post(depotDto: DepotDto, signal?: AbortSignal | undefined): Promise<DepotModel> {
+        let url_ = this.baseUrl + "/api/Depot/Post";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(depotDto);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPost(_response);
+        });
+    }
+
+    protected processPost(response: Response): Promise<DepotModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DepotModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DepotModel>(null as any);
+    }
+
+    put(depotDto: DepotDto, signal?: AbortSignal | undefined): Promise<DepotModel> {
+        let url_ = this.baseUrl + "/api/Depot/Put";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(depotDto);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPut(_response);
+        });
+    }
+
+    protected processPut(response: Response): Promise<DepotModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DepotModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DepotModel>(null as any);
+    }
+
+    delete(gid: string, signal?: AbortSignal | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Depot/Delete/{gid}";
+        if (gid === undefined || gid === null)
+            throw new Error("The parameter 'gid' must be defined.");
+        url_ = url_.replace("{gid}", encodeURIComponent("" + gid));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDelete(_response);
+        });
+    }
+
+    protected processDelete(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+}
+
 export class DriverClient {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
@@ -71,7 +477,7 @@ export class DriverClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:44356";
     }
 
-    getStops(areaId: string | undefined, vehicleId: string | undefined, weekday: number | undefined, signal?: AbortSignal | undefined): Promise<Stops> {
+    getStops(areaId: string | undefined, vehicleId: string | undefined, weekday: number | undefined, signal?: AbortSignal | undefined): Promise<StopsModel> {
         let url_ = this.baseUrl + "/api/Driver/GetStops?";
         if (areaId === null)
             throw new Error("The parameter 'areaId' cannot be null.");
@@ -100,14 +506,14 @@ export class DriverClient {
         });
     }
 
-    protected processGetStops(response: Response): Promise<Stops> {
+    protected processGetStops(response: Response): Promise<StopsModel> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = Stops.fromJS(resultData200);
+            result200 = StopsModel.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -115,7 +521,210 @@ export class DriverClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Stops>(null as any);
+        return Promise.resolve<StopsModel>(null as any);
+    }
+}
+
+export class PickupClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:44356";
+    }
+
+    getAll(signal?: AbortSignal | undefined): Promise<PickupModel[]> {
+        let url_ = this.baseUrl + "/api/Pickup/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAll(_response);
+        });
+    }
+
+    protected processGetAll(response: Response): Promise<PickupModel[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PickupModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<PickupModel[]>(null as any);
+    }
+
+    getPickup(gid: string, signal?: AbortSignal | undefined): Promise<PickupModel> {
+        let url_ = this.baseUrl + "/api/Pickup/GetPickup/{gid}";
+        if (gid === undefined || gid === null)
+            throw new Error("The parameter 'gid' must be defined.");
+        url_ = url_.replace("{gid}", encodeURIComponent("" + gid));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetPickup(_response);
+        });
+    }
+
+    protected processGetPickup(response: Response): Promise<PickupModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PickupModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<PickupModel>(null as any);
+    }
+
+    post(pickupDto: PickupDto, signal?: AbortSignal | undefined): Promise<PickupModel> {
+        let url_ = this.baseUrl + "/api/Pickup/Post";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pickupDto);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPost(_response);
+        });
+    }
+
+    protected processPost(response: Response): Promise<PickupModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PickupModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<PickupModel>(null as any);
+    }
+
+    put(pickupDto: PickupDto, signal?: AbortSignal | undefined): Promise<PickupModel> {
+        let url_ = this.baseUrl + "/api/Pickup/Put";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pickupDto);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPut(_response);
+        });
+    }
+
+    protected processPut(response: Response): Promise<PickupModel> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PickupModel.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<PickupModel>(null as any);
+    }
+
+    delete(gid: string, signal?: AbortSignal | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Pickup/Delete/{gid}";
+        if (gid === undefined || gid === null)
+            throw new Error("The parameter 'gid' must be defined.");
+        url_ = url_.replace("{gid}", encodeURIComponent("" + gid));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDelete(_response);
+        });
+    }
+
+    protected processDelete(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
     }
 }
 
@@ -1071,12 +1680,17 @@ export interface IDeliveryDay {
     weekday: number;
 }
 
-export class Stops implements IStops {
-    depot!: Depot;
-    pickups!: Pickup[];
-    deliveries!: Delivery[];
+export class DeliveryModel implements IDeliveryModel {
+    gid!: string;
+    deliveryName!: string;
+    contactName!: string;
+    contactPhone!: string;
+    shape!: EsriPointModel;
+    stopTime!: number;
+    vehicleId!: string;
+    deliveryDays!: DeliveryDay[];
 
-    constructor(data?: IStops) {
+    constructor(data?: IDeliveryModel) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1087,11 +1701,420 @@ export class Stops implements IStops {
 
     init(_data?: any) {
         if (_data) {
-            this.depot = _data["depot"] ? Depot.fromJS(_data["depot"]) : <any>null;
+            this.gid = _data["gid"] !== undefined ? _data["gid"] : <any>null;
+            this.deliveryName = _data["deliveryName"] !== undefined ? _data["deliveryName"] : <any>null;
+            this.contactName = _data["contactName"] !== undefined ? _data["contactName"] : <any>null;
+            this.contactPhone = _data["contactPhone"] !== undefined ? _data["contactPhone"] : <any>null;
+            this.shape = _data["shape"] ? EsriPointModel.fromJS(_data["shape"]) : <any>null;
+            this.stopTime = _data["stopTime"] !== undefined ? _data["stopTime"] : <any>null;
+            this.vehicleId = _data["vehicleId"] !== undefined ? _data["vehicleId"] : <any>null;
+            if (Array.isArray(_data["deliveryDays"])) {
+                this.deliveryDays = [] as any;
+                for (let item of _data["deliveryDays"])
+                    this.deliveryDays!.push(DeliveryDay.fromJS(item));
+            }
+            else {
+                this.deliveryDays = <any>null;
+            }
+        }
+    }
+
+    static fromJS(data: any): DeliveryModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeliveryModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["gid"] = this.gid !== undefined ? this.gid : <any>null;
+        data["deliveryName"] = this.deliveryName !== undefined ? this.deliveryName : <any>null;
+        data["contactName"] = this.contactName !== undefined ? this.contactName : <any>null;
+        data["contactPhone"] = this.contactPhone !== undefined ? this.contactPhone : <any>null;
+        data["shape"] = this.shape ? this.shape.toJSON() : <any>null;
+        data["stopTime"] = this.stopTime !== undefined ? this.stopTime : <any>null;
+        data["vehicleId"] = this.vehicleId !== undefined ? this.vehicleId : <any>null;
+        if (Array.isArray(this.deliveryDays)) {
+            data["deliveryDays"] = [];
+            for (let item of this.deliveryDays)
+                data["deliveryDays"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IDeliveryModel {
+    gid: string;
+    deliveryName: string;
+    contactName: string;
+    contactPhone: string;
+    shape: EsriPointModel;
+    stopTime: number;
+    vehicleId: string;
+    deliveryDays: DeliveryDay[];
+}
+
+export class EsriPointModel implements IEsriPointModel {
+    spatialReference!: EsriSpatialReferenceModel;
+    x!: number;
+    y!: number;
+
+    constructor(data?: IEsriPointModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.spatialReference = _data["spatialReference"] ? EsriSpatialReferenceModel.fromJS(_data["spatialReference"]) : <any>null;
+            this.x = _data["x"] !== undefined ? _data["x"] : <any>null;
+            this.y = _data["y"] !== undefined ? _data["y"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): EsriPointModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new EsriPointModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["spatialReference"] = this.spatialReference ? this.spatialReference.toJSON() : <any>null;
+        data["x"] = this.x !== undefined ? this.x : <any>null;
+        data["y"] = this.y !== undefined ? this.y : <any>null;
+        return data;
+    }
+}
+
+export interface IEsriPointModel {
+    spatialReference: EsriSpatialReferenceModel;
+    x: number;
+    y: number;
+}
+
+export class EsriSpatialReferenceModel implements IEsriSpatialReferenceModel {
+    wkid!: number;
+
+    constructor(data?: IEsriSpatialReferenceModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.wkid = _data["wkid"] !== undefined ? _data["wkid"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): EsriSpatialReferenceModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new EsriSpatialReferenceModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["wkid"] = this.wkid !== undefined ? this.wkid : <any>null;
+        return data;
+    }
+}
+
+export interface IEsriSpatialReferenceModel {
+    wkid: number;
+}
+
+export class DeliveryDto implements IDeliveryDto {
+    gid!: string;
+    deliveryName!: string;
+    contactName!: string;
+    contactPhone!: string;
+    shape!: EsriPointDto;
+    stopTime!: number;
+    vehicleId!: string;
+    deliveryDays!: DeliveryDay[];
+
+    constructor(data?: IDeliveryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.gid = _data["gid"] !== undefined ? _data["gid"] : <any>null;
+            this.deliveryName = _data["deliveryName"] !== undefined ? _data["deliveryName"] : <any>null;
+            this.contactName = _data["contactName"] !== undefined ? _data["contactName"] : <any>null;
+            this.contactPhone = _data["contactPhone"] !== undefined ? _data["contactPhone"] : <any>null;
+            this.shape = _data["shape"] ? EsriPointDto.fromJS(_data["shape"]) : <any>null;
+            this.stopTime = _data["stopTime"] !== undefined ? _data["stopTime"] : <any>null;
+            this.vehicleId = _data["vehicleId"] !== undefined ? _data["vehicleId"] : <any>null;
+            if (Array.isArray(_data["deliveryDays"])) {
+                this.deliveryDays = [] as any;
+                for (let item of _data["deliveryDays"])
+                    this.deliveryDays!.push(DeliveryDay.fromJS(item));
+            }
+            else {
+                this.deliveryDays = <any>null;
+            }
+        }
+    }
+
+    static fromJS(data: any): DeliveryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeliveryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["gid"] = this.gid !== undefined ? this.gid : <any>null;
+        data["deliveryName"] = this.deliveryName !== undefined ? this.deliveryName : <any>null;
+        data["contactName"] = this.contactName !== undefined ? this.contactName : <any>null;
+        data["contactPhone"] = this.contactPhone !== undefined ? this.contactPhone : <any>null;
+        data["shape"] = this.shape ? this.shape.toJSON() : <any>null;
+        data["stopTime"] = this.stopTime !== undefined ? this.stopTime : <any>null;
+        data["vehicleId"] = this.vehicleId !== undefined ? this.vehicleId : <any>null;
+        if (Array.isArray(this.deliveryDays)) {
+            data["deliveryDays"] = [];
+            for (let item of this.deliveryDays)
+                data["deliveryDays"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IDeliveryDto {
+    gid: string;
+    deliveryName: string;
+    contactName: string;
+    contactPhone: string;
+    shape: EsriPointDto;
+    stopTime: number;
+    vehicleId: string;
+    deliveryDays: DeliveryDay[];
+}
+
+export class EsriPointDto implements IEsriPointDto {
+    spatialReference!: SpatialReferenceDto;
+    x!: number;
+    y!: number;
+    z!: number | null;
+
+    constructor(data?: IEsriPointDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.spatialReference = _data["spatialReference"] ? SpatialReferenceDto.fromJS(_data["spatialReference"]) : <any>null;
+            this.x = _data["x"] !== undefined ? _data["x"] : <any>null;
+            this.y = _data["y"] !== undefined ? _data["y"] : <any>null;
+            this.z = _data["z"] !== undefined ? _data["z"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): EsriPointDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EsriPointDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["spatialReference"] = this.spatialReference ? this.spatialReference.toJSON() : <any>null;
+        data["x"] = this.x !== undefined ? this.x : <any>null;
+        data["y"] = this.y !== undefined ? this.y : <any>null;
+        data["z"] = this.z !== undefined ? this.z : <any>null;
+        return data;
+    }
+}
+
+export interface IEsriPointDto {
+    spatialReference: SpatialReferenceDto;
+    x: number;
+    y: number;
+    z: number | null;
+}
+
+export class SpatialReferenceDto implements ISpatialReferenceDto {
+    wkid!: number;
+    latestWkid!: number | null;
+
+    constructor(data?: ISpatialReferenceDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.wkid = _data["wkid"] !== undefined ? _data["wkid"] : <any>null;
+            this.latestWkid = _data["latestWkid"] !== undefined ? _data["latestWkid"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): SpatialReferenceDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpatialReferenceDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["wkid"] = this.wkid !== undefined ? this.wkid : <any>null;
+        data["latestWkid"] = this.latestWkid !== undefined ? this.latestWkid : <any>null;
+        return data;
+    }
+}
+
+export interface ISpatialReferenceDto {
+    wkid: number;
+    latestWkid: number | null;
+}
+
+export class DepotModel implements IDepotModel {
+    gid!: string;
+    depotName!: string;
+    shape!: EsriPointModel;
+    areaId!: string;
+
+    constructor(data?: IDepotModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.gid = _data["gid"] !== undefined ? _data["gid"] : <any>null;
+            this.depotName = _data["depotName"] !== undefined ? _data["depotName"] : <any>null;
+            this.shape = _data["shape"] ? EsriPointModel.fromJS(_data["shape"]) : <any>null;
+            this.areaId = _data["areaId"] !== undefined ? _data["areaId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): DepotModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new DepotModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["gid"] = this.gid !== undefined ? this.gid : <any>null;
+        data["depotName"] = this.depotName !== undefined ? this.depotName : <any>null;
+        data["shape"] = this.shape ? this.shape.toJSON() : <any>null;
+        data["areaId"] = this.areaId !== undefined ? this.areaId : <any>null;
+        return data;
+    }
+}
+
+export interface IDepotModel {
+    gid: string;
+    depotName: string;
+    shape: EsriPointModel;
+    areaId: string;
+}
+
+export class DepotDto implements IDepotDto {
+    gid!: string;
+    depotName!: string;
+    shape!: EsriPointDto;
+    areaId!: string;
+
+    constructor(data?: IDepotDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.gid = _data["gid"] !== undefined ? _data["gid"] : <any>null;
+            this.depotName = _data["depotName"] !== undefined ? _data["depotName"] : <any>null;
+            this.shape = _data["shape"] ? EsriPointDto.fromJS(_data["shape"]) : <any>null;
+            this.areaId = _data["areaId"] !== undefined ? _data["areaId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): DepotDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DepotDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["gid"] = this.gid !== undefined ? this.gid : <any>null;
+        data["depotName"] = this.depotName !== undefined ? this.depotName : <any>null;
+        data["shape"] = this.shape ? this.shape.toJSON() : <any>null;
+        data["areaId"] = this.areaId !== undefined ? this.areaId : <any>null;
+        return data;
+    }
+}
+
+export interface IDepotDto {
+    gid: string;
+    depotName: string;
+    shape: EsriPointDto;
+    areaId: string;
+}
+
+export class StopsModel implements IStopsModel {
+    depot!: DepotModel;
+    pickups!: PickupModel[];
+    deliveries!: DeliveryModel[];
+
+    constructor(data?: IStopsModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.depot = _data["depot"] ? DepotModel.fromJS(_data["depot"]) : <any>null;
             if (Array.isArray(_data["pickups"])) {
                 this.pickups = [] as any;
                 for (let item of _data["pickups"])
-                    this.pickups!.push(Pickup.fromJS(item));
+                    this.pickups!.push(PickupModel.fromJS(item));
             }
             else {
                 this.pickups = <any>null;
@@ -1099,7 +2122,7 @@ export class Stops implements IStops {
             if (Array.isArray(_data["deliveries"])) {
                 this.deliveries = [] as any;
                 for (let item of _data["deliveries"])
-                    this.deliveries!.push(Delivery.fromJS(item));
+                    this.deliveries!.push(DeliveryModel.fromJS(item));
             }
             else {
                 this.deliveries = <any>null;
@@ -1107,9 +2130,9 @@ export class Stops implements IStops {
         }
     }
 
-    static fromJS(data: any): Stops {
+    static fromJS(data: any): StopsModel {
         data = typeof data === 'object' ? data : {};
-        let result = new Stops();
+        let result = new StopsModel();
         result.init(data);
         return result;
     }
@@ -1131,19 +2154,27 @@ export class Stops implements IStops {
     }
 }
 
-export interface IStops {
-    depot: Depot;
-    pickups: Pickup[];
-    deliveries: Delivery[];
+export interface IStopsModel {
+    depot: DepotModel;
+    pickups: PickupModel[];
+    deliveries: DeliveryModel[];
 }
 
-export class Depot implements IDepot {
+export class PickupModel implements IPickupModel {
     gid!: string;
-    depotName!: string;
-    shape!: Point;
-    areaId!: string;
+    pickupName!: string;
+    contactName!: string;
+    contactPhoneNumber!: string;
+    avarageVolume!: number;
+    openingHour!: number;
+    closingHour!: number;
+    avarageStoptime!: number;
+    vehicleId!: string;
+    shape!: EsriPointModel;
+    active!: boolean;
+    pickupType!: PickupType;
 
-    constructor(data?: IDepot) {
+    constructor(data?: IPickupModel) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1155,15 +2186,23 @@ export class Depot implements IDepot {
     init(_data?: any) {
         if (_data) {
             this.gid = _data["gid"] !== undefined ? _data["gid"] : <any>null;
-            this.depotName = _data["depotName"] !== undefined ? _data["depotName"] : <any>null;
-            this.shape = _data["shape"] ? Point.fromJS(_data["shape"]) : <any>null;
-            this.areaId = _data["areaId"] !== undefined ? _data["areaId"] : <any>null;
+            this.pickupName = _data["pickupName"] !== undefined ? _data["pickupName"] : <any>null;
+            this.contactName = _data["contactName"] !== undefined ? _data["contactName"] : <any>null;
+            this.contactPhoneNumber = _data["contactPhoneNumber"] !== undefined ? _data["contactPhoneNumber"] : <any>null;
+            this.avarageVolume = _data["avarageVolume"] !== undefined ? _data["avarageVolume"] : <any>null;
+            this.openingHour = _data["openingHour"] !== undefined ? _data["openingHour"] : <any>null;
+            this.closingHour = _data["closingHour"] !== undefined ? _data["closingHour"] : <any>null;
+            this.avarageStoptime = _data["avarageStoptime"] !== undefined ? _data["avarageStoptime"] : <any>null;
+            this.vehicleId = _data["vehicleId"] !== undefined ? _data["vehicleId"] : <any>null;
+            this.shape = _data["shape"] ? EsriPointModel.fromJS(_data["shape"]) : <any>null;
+            this.active = _data["active"] !== undefined ? _data["active"] : <any>null;
+            this.pickupType = _data["pickupType"] !== undefined ? _data["pickupType"] : <any>null;
         }
     }
 
-    static fromJS(data: any): Depot {
+    static fromJS(data: any): PickupModel {
         data = typeof data === 'object' ? data : {};
-        let result = new Depot();
+        let result = new PickupModel();
         result.init(data);
         return result;
     }
@@ -1171,18 +2210,114 @@ export class Depot implements IDepot {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["gid"] = this.gid !== undefined ? this.gid : <any>null;
-        data["depotName"] = this.depotName !== undefined ? this.depotName : <any>null;
+        data["pickupName"] = this.pickupName !== undefined ? this.pickupName : <any>null;
+        data["contactName"] = this.contactName !== undefined ? this.contactName : <any>null;
+        data["contactPhoneNumber"] = this.contactPhoneNumber !== undefined ? this.contactPhoneNumber : <any>null;
+        data["avarageVolume"] = this.avarageVolume !== undefined ? this.avarageVolume : <any>null;
+        data["openingHour"] = this.openingHour !== undefined ? this.openingHour : <any>null;
+        data["closingHour"] = this.closingHour !== undefined ? this.closingHour : <any>null;
+        data["avarageStoptime"] = this.avarageStoptime !== undefined ? this.avarageStoptime : <any>null;
+        data["vehicleId"] = this.vehicleId !== undefined ? this.vehicleId : <any>null;
         data["shape"] = this.shape ? this.shape.toJSON() : <any>null;
-        data["areaId"] = this.areaId !== undefined ? this.areaId : <any>null;
+        data["active"] = this.active !== undefined ? this.active : <any>null;
+        data["pickupType"] = this.pickupType !== undefined ? this.pickupType : <any>null;
         return data;
     }
 }
 
-export interface IDepot {
+export interface IPickupModel {
     gid: string;
-    depotName: string;
-    shape: Point;
-    areaId: string;
+    pickupName: string;
+    contactName: string;
+    contactPhoneNumber: string;
+    avarageVolume: number;
+    openingHour: number;
+    closingHour: number;
+    avarageStoptime: number;
+    vehicleId: string;
+    shape: EsriPointModel;
+    active: boolean;
+    pickupType: PickupType;
+}
+
+export class PickupDto implements IPickupDto {
+    gid!: string;
+    pickupName!: string;
+    contactName!: string;
+    contactPhoneNumber!: string;
+    avarageVolume!: number;
+    openingHour!: number;
+    closingHour!: number;
+    avarageStoptime!: number;
+    vehicleId!: string;
+    shape!: EsriPointDto;
+    active!: boolean;
+    pickupType!: PickupType;
+
+    constructor(data?: IPickupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.gid = _data["gid"] !== undefined ? _data["gid"] : <any>null;
+            this.pickupName = _data["pickupName"] !== undefined ? _data["pickupName"] : <any>null;
+            this.contactName = _data["contactName"] !== undefined ? _data["contactName"] : <any>null;
+            this.contactPhoneNumber = _data["contactPhoneNumber"] !== undefined ? _data["contactPhoneNumber"] : <any>null;
+            this.avarageVolume = _data["avarageVolume"] !== undefined ? _data["avarageVolume"] : <any>null;
+            this.openingHour = _data["openingHour"] !== undefined ? _data["openingHour"] : <any>null;
+            this.closingHour = _data["closingHour"] !== undefined ? _data["closingHour"] : <any>null;
+            this.avarageStoptime = _data["avarageStoptime"] !== undefined ? _data["avarageStoptime"] : <any>null;
+            this.vehicleId = _data["vehicleId"] !== undefined ? _data["vehicleId"] : <any>null;
+            this.shape = _data["shape"] ? EsriPointDto.fromJS(_data["shape"]) : <any>null;
+            this.active = _data["active"] !== undefined ? _data["active"] : <any>null;
+            this.pickupType = _data["pickupType"] !== undefined ? _data["pickupType"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): PickupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PickupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["gid"] = this.gid !== undefined ? this.gid : <any>null;
+        data["pickupName"] = this.pickupName !== undefined ? this.pickupName : <any>null;
+        data["contactName"] = this.contactName !== undefined ? this.contactName : <any>null;
+        data["contactPhoneNumber"] = this.contactPhoneNumber !== undefined ? this.contactPhoneNumber : <any>null;
+        data["avarageVolume"] = this.avarageVolume !== undefined ? this.avarageVolume : <any>null;
+        data["openingHour"] = this.openingHour !== undefined ? this.openingHour : <any>null;
+        data["closingHour"] = this.closingHour !== undefined ? this.closingHour : <any>null;
+        data["avarageStoptime"] = this.avarageStoptime !== undefined ? this.avarageStoptime : <any>null;
+        data["vehicleId"] = this.vehicleId !== undefined ? this.vehicleId : <any>null;
+        data["shape"] = this.shape ? this.shape.toJSON() : <any>null;
+        data["active"] = this.active !== undefined ? this.active : <any>null;
+        data["pickupType"] = this.pickupType !== undefined ? this.pickupType : <any>null;
+        return data;
+    }
+}
+
+export interface IPickupDto {
+    gid: string;
+    pickupName: string;
+    contactName: string;
+    contactPhoneNumber: string;
+    avarageVolume: number;
+    openingHour: number;
+    closingHour: number;
+    avarageStoptime: number;
+    vehicleId: string;
+    shape: EsriPointDto;
+    active: boolean;
+    pickupType: PickupType;
 }
 
 export class ApiException extends Error {

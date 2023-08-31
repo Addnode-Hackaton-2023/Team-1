@@ -20,6 +20,11 @@ namespace AllwinPlanning.Infrastructure.Repository
 				.ToListAsync();
 		}
 
+		public async Task<List<Pickup>> GetAllPickups()
+		{
+			return await m_Context.Pickups.ToListAsync();
+		}
+
 		public async Task<List<Delivery>> GetDeliveries(Guid vehicleId, int weekday)
 		{
 			return await m_Context.Deliveries
@@ -28,12 +33,19 @@ namespace AllwinPlanning.Infrastructure.Repository
 				.ToListAsync();
 		}
 
+		public async Task<List<Delivery>> GetAllDeliveries()
+		{
+			return await m_Context.Deliveries
+				.Include(d => d.DeliveryDays)
+				.ToListAsync();
+		}
+
 		public async Task<List<Depot>> GetDepots()
 		{
 			return await m_Context.Depots.ToListAsync();
 		}
 
-        public async Task<List<Vehicle>> GetVehicles()
+		public async Task<List<Vehicle>> GetVehicles()
 		{
 			return await m_Context.Vehicles.ToListAsync();
 		}

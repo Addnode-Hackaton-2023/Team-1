@@ -15,6 +15,7 @@ using var context = new AllwinContext(dbBuilderContext.Options);
 context.Database.Migrate();
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 builder.Services.AddOpenApiDocument();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -35,6 +36,8 @@ var app = builder.Build();
     // Available at: http://localhost:<port>/swagger
     app.UseSwaggerUi3();
 //}
+
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
