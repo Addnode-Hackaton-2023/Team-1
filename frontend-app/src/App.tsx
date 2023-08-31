@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Map from "@arcgis/core/Map.js";
 import MapView from "@arcgis/core/views/MapView.js";
@@ -11,7 +9,6 @@ import FormTemplate from "@arcgis/core/form/FormTemplate.js";
 import FieldElement from "@arcgis/core/form/elements/FieldElement.js";
 import ComboBoxInput from "@arcgis/core/form/elements/inputs/ComboBoxInput.js";
 import CodedValueDomain from "@arcgis/core/layers/support/CodedValueDomain.js";
-import FeatureTemplate from "@arcgis/core/layers/support/FeatureTemplate.js";
 
 function App() {
 useEffect(() => {
