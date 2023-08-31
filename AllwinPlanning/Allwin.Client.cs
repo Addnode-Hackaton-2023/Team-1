@@ -56,14 +56,14 @@ namespace Allwin.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Vehicle>> GetVehiclesAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VehicleModel>> GetVehiclesAsync()
         {
             return GetVehiclesAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Vehicle>> GetVehiclesAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VehicleModel>> GetVehiclesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Admin/GetVehicles");
@@ -100,7 +100,7 @@ namespace Allwin.Client
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Vehicle>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<VehicleModel>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1992,7 +1992,7 @@ namespace Allwin.Client
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Vehicle
+    public partial class VehicleModel
     {
         [Newtonsoft.Json.JsonProperty("gid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Gid { get; set; }
@@ -2007,15 +2007,15 @@ namespace Allwin.Client
         public System.Guid DepotId { get; set; }
 
         [Newtonsoft.Json.JsonProperty("pickups", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Pickup> Pickups { get; set; }
+        public System.Collections.Generic.ICollection<PickupModel> Pickups { get; set; }
 
         [Newtonsoft.Json.JsonProperty("deliveries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Delivery> Deliveries { get; set; }
+        public System.Collections.Generic.ICollection<DeliveryModel> Deliveries { get; set; }
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Pickup
+    public partial class PickupModel
     {
         [Newtonsoft.Json.JsonProperty("gid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Gid { get; set; }
@@ -2045,7 +2045,7 @@ namespace Allwin.Client
         public System.Guid VehicleId { get; set; }
 
         [Newtonsoft.Json.JsonProperty("shape", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Point Shape { get; set; }
+        public EsriPointModel Shape { get; set; }
 
         [Newtonsoft.Json.JsonProperty("active", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool Active { get; set; }
@@ -2056,25 +2056,10 @@ namespace Allwin.Client
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Point : Geometry
+    public partial class EsriPointModel
     {
-        [Newtonsoft.Json.JsonProperty("coordinateSequence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CoordinateSequence CoordinateSequence { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("coordinates", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Coordinate> Coordinates { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("numPoints", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int NumPoints { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("isEmpty", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsEmpty { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("dimension", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dimension Dimension { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("boundaryDimension", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dimension BoundaryDimension { get; set; }
+        [Newtonsoft.Json.JsonProperty("spatialReference", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public EsriSpatialReferenceModel SpatialReference { get; set; }
 
         [Newtonsoft.Json.JsonProperty("x", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double X { get; set; }
@@ -2082,431 +2067,13 @@ namespace Allwin.Client
         [Newtonsoft.Json.JsonProperty("y", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double Y { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("coordinate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Coordinate Coordinate { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("geometryType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GeometryType { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("ogcGeometryType", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public OgcGeometryType OgcGeometryType { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("boundary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Geometry Boundary { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("z", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Z { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("m", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double M { get; set; }
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public abstract partial class CoordinateSequence
+    public partial class EsriSpatialReferenceModel
     {
-        [Newtonsoft.Json.JsonProperty("dimension", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Dimension { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("measures", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Measures { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("spatial", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Spatial { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("ordinates", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Ordinates Ordinates { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("hasZ", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool HasZ { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("hasM", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool HasM { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("zOrdinateIndex", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int ZOrdinateIndex { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("mOrdinateIndex", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int MOrdinateIndex { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("first", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Coordinate First { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("last", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Coordinate Last { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Count { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    [System.Flags]
-    public enum Ordinates
-    {
-
-        None = 0,
-
-        X = 1,
-
-        Spatial1 = 1,
-
-        Y = 2,
-
-        Spatial2 = 2,
-
-        XY = 3,
-
-        Spatial3 = 4,
-
-        Z = 4,
-
-        XYZ = 7,
-
-        Spatial4 = 8,
-
-        Spatial5 = 16,
-
-        Spatial6 = 32,
-
-        Spatial7 = 64,
-
-        Spatial8 = 128,
-
-        Spatial9 = 256,
-
-        Spatial10 = 512,
-
-        Spatial11 = 1024,
-
-        Spatial12 = 2048,
-
-        Spatial13 = 4096,
-
-        Spatial14 = 8192,
-
-        Spatial15 = 16384,
-
-        Spatial16 = 32768,
-
-        AllSpatialOrdinates = 65535,
-
-        Measure1 = 65536,
-
-        M = 65536,
-
-        XYM = 65539,
-
-        XYZM = 65543,
-
-        Measure2 = 131072,
-
-        Measure3 = 262144,
-
-        Measure4 = 524288,
-
-        Measure5 = 1048576,
-
-        Measure6 = 2097152,
-
-        Measure7 = 4194304,
-
-        Measure8 = 8388608,
-
-        Measure9 = 16777216,
-
-        Measure10 = 33554432,
-
-        Measure11 = 67108864,
-
-        Measure12 = 134217728,
-
-        Measure13 = 268435456,
-
-        Measure14 = 536870912,
-
-        Measure15 = 1073741824,
-
-        Measure16 = -2147483648,
-
-        AllMeasureOrdinates = -65536,
-
-        AllOrdinates = -1,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Coordinate
-    {
-        [Newtonsoft.Json.JsonProperty("x", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double X { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("y", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Y { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("z", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Z { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("m", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double M { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("coordinateValue", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Coordinate CoordinateValue { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("isValid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsValid { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public enum Dimension
-    {
-
-        P = 0,
-
-        Point = 0,
-
-        Curve = 1,
-
-        L = 1,
-
-        A = 2,
-
-        Surface = 2,
-
-        Collapse = 3,
-
-        Dontcare = -3,
-
-        True = -2,
-
-        Unknown = -1,
-
-        False = -1,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public enum OgcGeometryType
-    {
-
-        Point = 1,
-
-        LineString = 2,
-
-        Polygon = 3,
-
-        MultiPoint = 4,
-
-        MultiLineString = 5,
-
-        MultiPolygon = 6,
-
-        GeometryCollection = 7,
-
-        CircularString = 8,
-
-        CompoundCurve = 9,
-
-        CurvePolygon = 10,
-
-        MultiCurve = 11,
-
-        MultiSurface = 12,
-
-        Curve = 13,
-
-        Surface = 14,
-
-        PolyhedralSurface = 15,
-
-        TIN = 16,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public abstract partial class Geometry
-    {
-        [Newtonsoft.Json.JsonProperty("factory", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public GeometryFactory Factory { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("userData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public object UserData { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("srid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Srid { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("precisionModel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PrecisionModel PrecisionModel { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("numGeometries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int NumGeometries { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("isSimple", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsSimple { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("isValid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsValid { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Area { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("length", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Length { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("centroid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Point Centroid { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("interiorPoint", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Point InteriorPoint { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pointOnSurface", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Point PointOnSurface { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("envelope", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Geometry Envelope { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("envelopeInternal", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Envelope EnvelopeInternal { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("isRectangle", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsRectangle { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class GeometryFactory
-    {
-        [Newtonsoft.Json.JsonProperty("precisionModel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PrecisionModel PrecisionModel { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("coordinateSequenceFactory", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CoordinateSequenceFactory CoordinateSequenceFactory { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("srid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Srid { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("geometryServices", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NtsGeometryServices GeometryServices { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class PrecisionModel
-    {
-        [Newtonsoft.Json.JsonProperty("isFloating", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsFloating { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("maximumSignificantDigits", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int MaximumSignificantDigits { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("scale", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Scale { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("gridSize", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double GridSize { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("precisionModelType", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PrecisionModels PrecisionModelType { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public enum PrecisionModels
-    {
-
-        Floating = 0,
-
-        FloatingSingle = 1,
-
-        Fixed = 2,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public abstract partial class CoordinateSequenceFactory
-    {
-        [Newtonsoft.Json.JsonProperty("ordinates", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Ordinates Ordinates { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class NtsGeometryServices
-    {
-        [Newtonsoft.Json.JsonProperty("geometryOverlay", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public GeometryOverlay GeometryOverlay { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("coordinateEqualityComparer", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CoordinateEqualityComparer CoordinateEqualityComparer { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("defaultSRID", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int DefaultSRID { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("defaultCoordinateSequenceFactory", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CoordinateSequenceFactory DefaultCoordinateSequenceFactory { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("defaultPrecisionModel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PrecisionModel DefaultPrecisionModel { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public abstract partial class GeometryOverlay
-    {
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class CoordinateEqualityComparer : EqualityComparerOfCoordinate
-    {
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public abstract partial class EqualityComparerOfCoordinate
-    {
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Envelope
-    {
-        [Newtonsoft.Json.JsonProperty("isNull", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsNull { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("width", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Width { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Height { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("diameter", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Diameter { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("minX", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double MinX { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("maxX", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double MaxX { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("minY", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double MinY { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("maxY", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double MaxY { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Area { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("minExtent", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double MinExtent { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("maxExtent", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double MaxExtent { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("centre", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Coordinate Centre { get; set; }
+        [Newtonsoft.Json.JsonProperty("wkid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Wkid { get; set; }
 
     }
 
@@ -2517,49 +2084,6 @@ namespace Allwin.Client
         Train = 0,
 
         Store = 1,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Delivery
-    {
-        [Newtonsoft.Json.JsonProperty("gid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Gid { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("deliveryName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DeliveryName { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("contactName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ContactName { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("contactPhone", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ContactPhone { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("shape", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Point Shape { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("stopTime", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int StopTime { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("vehicleId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid VehicleId { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("deliveryDays", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<DeliveryDay> DeliveryDays { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class DeliveryDay
-    {
-        [Newtonsoft.Json.JsonProperty("gid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Gid { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("deliveryId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid DeliveryId { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("weekday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Weekday { get; set; }
 
     }
 
@@ -2593,24 +2117,16 @@ namespace Allwin.Client
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class EsriPointModel
+    public partial class DeliveryDay
     {
-        [Newtonsoft.Json.JsonProperty("spatialReference", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public EsriSpatialReferenceModel SpatialReference { get; set; }
+        [Newtonsoft.Json.JsonProperty("gid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Gid { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("x", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double X { get; set; }
+        [Newtonsoft.Json.JsonProperty("deliveryId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid DeliveryId { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("y", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Y { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class EsriSpatialReferenceModel
-    {
-        [Newtonsoft.Json.JsonProperty("wkid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Wkid { get; set; }
+        [Newtonsoft.Json.JsonProperty("weekday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Weekday { get; set; }
 
     }
 
@@ -2716,47 +2232,6 @@ namespace Allwin.Client
 
         [Newtonsoft.Json.JsonProperty("deliveries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<DeliveryModel> Deliveries { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class PickupModel
-    {
-        [Newtonsoft.Json.JsonProperty("gid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Gid { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pickupName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PickupName { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("contactName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ContactName { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("contactPhoneNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ContactPhoneNumber { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("avarageVolume", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int AvarageVolume { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("openingHour", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int OpeningHour { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("closingHour", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int ClosingHour { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("avarageStoptime", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int AvarageStoptime { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("vehicleId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid VehicleId { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("shape", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public EsriPointModel Shape { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("active", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Active { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pickupType", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PickupType PickupType { get; set; }
 
     }
 
