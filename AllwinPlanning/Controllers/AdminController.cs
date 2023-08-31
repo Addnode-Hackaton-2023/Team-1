@@ -28,5 +28,11 @@ namespace AllwinPlanning.Controllers
         {
             return await _repository.GetAreas();
         }
+
+        [HttpGet(Name = "GetStopLog")]
+        public async Task<List<StopLog>> GetStopLog()
+        {
+            return await _repository.GetStopLog();
+        }
     }
 }

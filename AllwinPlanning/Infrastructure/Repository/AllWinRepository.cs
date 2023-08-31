@@ -111,5 +111,11 @@ namespace AllwinPlanning.Infrastructure.Repository
             var delivery = await m_Context.Deliveries.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
             m_Context.Deliveries.Remove(delivery);
         }
+
+        public async Task<List<StopLog>> GetStopLog()
+        {
+            var stopLog = await m_Context.StopLog.ToListAsync();
+            return stopLog;
+        }
     }
 }
