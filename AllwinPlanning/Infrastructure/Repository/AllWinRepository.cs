@@ -88,6 +88,12 @@ namespace AllwinPlanning.Infrastructure.Repository
 			return Task.FromResult(result.Entity);
 		}
 
+		public Task<StopLog> AddStopLog(StopLog stopLog)
+		{
+			var result = m_Context.Add(stopLog);
+			return Task.FromResult(result.Entity);
+		}
+
 		public async Task DeleteDepot(Guid gid)
 		{
 			var depot = await m_Context.Depots.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");

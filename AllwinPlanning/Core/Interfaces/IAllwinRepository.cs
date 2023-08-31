@@ -17,6 +17,7 @@ namespace AllwinPlanning.Core.Interfaces
 		Task<Depot> AddDepot(Depot depot);
 		Task<Pickup> AddPickup(Pickup pickup);
 		Task<Delivery> AddDelivery(Delivery delivery);
+		Task<StopLog> AddStopLog(StopLog stopLog);
 		Task DeleteDepot(Guid gid);
 		Task DeletePickup(Guid gid);
 		Task DeleteDelivery(Guid gid);
