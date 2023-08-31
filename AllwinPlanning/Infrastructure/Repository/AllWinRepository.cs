@@ -20,10 +20,17 @@ namespace AllwinPlanning.Infrastructure.Repository
 				.ToListAsync();
 		}
 
-		public async Task<List<Pickup>> GetAllPickups()
-		{
-			return await m_Context.Pickups.ToListAsync();
-		}
+        public async Task<List<Pickup>> GetActivePickups(Guid vehicleId)
+        {
+            return await m_Context.Pickups
+                .Where(p => p.VehicleId == vehicleId && p.Active)
+                .ToListAsync();
+        }
+
+        public async Task<List<Pickup>> GetAllPickups()
+        {
+            return await m_Context.Pickups.ToListAsync();
+        }
 
 		public async Task<List<Delivery>> GetDeliveries(Guid vehicleId, int weekday)
 		{

@@ -20,7 +20,7 @@ namespace AllwinPlanning.Controllers
 		public async Task<StopsModel> GetStops([FromQuery] Guid areaId, [FromQuery] Guid vehicleId, [FromQuery] int weekday)
 		{
 			var depot = await _repository.GetDepot(areaId);
-			var pickups = await _repository.GetPickups(vehicleId);
+			var pickups = await _repository.GetActivePickups(vehicleId);
 			var deliveries = await _repository.GetDeliveries(vehicleId, weekday);
 
 			return new StopsModel()
