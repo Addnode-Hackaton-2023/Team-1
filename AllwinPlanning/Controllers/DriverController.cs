@@ -32,18 +32,16 @@ namespace AllwinPlanning.Controllers
 		}
 
         [HttpPost(Name = "AddStopLog")]
-		public async Task<ActionResult> AddStopLogAsync(StopLog stopLog)
+		public async Task<ActionResult<StopLog>> AddStopLogAsync(StopLog stopLog)
 		{
 			try
 			{
-				await _repository.AddStopLog(stopLog);
+				return Ok(await _repository.AddStopLog(stopLog));
 			}
 			catch(Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}
-			
-			return Ok();
 		}
     }
 }

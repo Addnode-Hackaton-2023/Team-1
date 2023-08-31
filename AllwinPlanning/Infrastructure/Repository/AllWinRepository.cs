@@ -73,24 +73,28 @@ namespace AllwinPlanning.Infrastructure.Repository
         public Task<Depot> AddDepot(Depot depot)
         {
             var result = m_Context.Add(depot);
+            m_Context.SaveChanges();
             return Task.FromResult(result.Entity);
         }
 
         public Task<Pickup> AddPickup(Pickup pickup)
         {
             var result = m_Context.Add(pickup);
+            m_Context.SaveChanges();
             return Task.FromResult(result.Entity);
         }
 
         public Task<Delivery> AddDelivery(Delivery delivery)
         {
             var result = m_Context.Add(delivery);
+            m_Context.SaveChanges();
             return Task.FromResult(result.Entity);
         }
 
         public Task<StopLog> AddStopLog(StopLog stopLog)
         {
             var result = m_Context.Add(stopLog);
+            m_Context.SaveChanges();
             return Task.FromResult(result.Entity);
         }
 
@@ -98,18 +102,21 @@ namespace AllwinPlanning.Infrastructure.Repository
         {
             var depot = await m_Context.Depots.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
             m_Context.Depots.Remove(depot);
+            m_Context.SaveChanges();
         }
 
         public async Task DeletePickup(Guid gid)
         {
             var pickup = await m_Context.Pickups.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
             m_Context.Pickups.Remove(pickup);
+            m_Context.SaveChanges();
         }
 
         public async Task DeleteDelivery(Guid gid)
         {
             var delivery = await m_Context.Deliveries.FirstOrDefaultAsync(d => d.Gid == gid) ?? throw new Exception("Not found");
             m_Context.Deliveries.Remove(delivery);
+            m_Context.SaveChanges();
         }
 
         public async Task<List<StopLog>> GetStopLog()
