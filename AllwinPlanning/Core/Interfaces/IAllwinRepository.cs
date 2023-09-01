@@ -5,7 +5,8 @@ namespace AllwinPlanning.Core.Interfaces
 	public interface IAllwinRepository
 	{
 		Task<List<Pickup>> GetPickups(Guid vehicleId);
-		Task<List<Pickup>> GetAllPickups();
+        Task<List<Pickup>> GetActivePickups(Guid vehicleId);
+        Task<List<Pickup>> GetAllPickups();
 		Task<List<Delivery>> GetDeliveries(Guid vehicleId, int weekday);
 		Task<List<Delivery>> GetAllDeliveries();
 		Task<List<Depot>> GetDepots();
@@ -18,9 +19,10 @@ namespace AllwinPlanning.Core.Interfaces
 		Task<Pickup> AddPickup(Pickup pickup);
 		Task<Delivery> AddDelivery(Delivery delivery);
 		Task<StopLog> AddStopLog(StopLog stopLog);
-        Task<List<StopLog>> GetStopLog();
-        Task DeleteDepot(Guid gid);
+		Task<List<StopLog>> GetStopLog();
+		Task DeleteDepot(Guid gid);
 		Task DeletePickup(Guid gid);
 		Task DeleteDelivery(Guid gid);
+		void Save();
 	}
 }
